@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tic-Tac-Toe</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>TIC-TAC-TOE</h1>
+    <h1>Let's Start The Game</h1>
+    <div class="play">
+<div class="cont" id="cont">
+    <div class="space" onclick="tictac(0)"></div>
+    <div class="space" onclick="tictac(1)"></div>
+    <div class="space" onclick="tictac(2)"></div>
+    <div class="space" onclick="tictac(3)"></div>
+    <div class="space" onclick="tictac(4)"></div>
+    <div class="space" onclick="tictac(5)"></div>
+    <div class="space" onclick="tictac(6)"></div>
+    <div class="space" onclick="tictac(7)"></div>
+    <div class="space" onclick="tictac(8)"></div>
+</div>
+</div>
+<div class="won">
+    <div id="xo"></div>
+</div>
+<div class="won">      
+    <button class="restart" onclick="restart()">&#8635;</button>
+</div>
+
+<script>
+    let Player = "X";
+    let cells = document.querySelectorAll(".space");
+    let gameOver = false;
+
+    function tictac(index) {
+        if (!gameOver && !cells[index].textContent) {
+            cells[index].textContent = Player;
+            if (checkWinner()) {
+                document.getElementById("xo").textContent = Player + " won !!!...";
+                gameOver = true;
+            } else if (Draw()) {
+                document.getElementById("xo").textContent = "...!!! draw !!!...";
+                gameOver = true;
+            } else {
+                Player = Player === "X" ? "O" : "X";
+            }
+        }
+    }
+
+    function checkWinner() {
+        const Conditions = [
+            [0, 1, 2],[3, 4, 5],[6, 7, 8],[0, 3, 6],[1, 4, 7],[2, 5, 8],[0, 4, 8],[2, 4, 6]
+        ];
+
+        return Conditions.some(condition => {
+            const [a, b, c] = condition;
+            return cells[a].textContent && cells[a].textContent === cells[b].textContent && cells[a].textContent === cells[c].textContent;
+        });
+    }
+
+    function Draw() {
+        return [...cells].every(cell => cell.textContent);
+    }
+
+    function restart() {
+        cells.forEach(cell => {
+            cell.textContent = "";
+        });
+        document.getElementById("xo").textContent = "";
+        gameOver = false;
+    }
+</script>
+
+</body>
+</html>
